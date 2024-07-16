@@ -130,11 +130,18 @@ defmodule Phoenix.PubSub.RedisServer do
   end
 
   defp establish_conn(%{redis_opts: redis_opts} = state) do
+    "state" |> IO.inspect()
+    state |> IO.inspect()
+
+    "redis_opts" |> IO.inspect()
+    redis_opts |> IO.inspect()
     case Redix.PubSub.start_link(redis_opts) do
       {:ok, redix_pid} ->
         establish_success(%{state | redix_pid: redix_pid})
 
-      {:error, _} ->
+      {:error, err} ->
+        "err" |> IO.inspect()
+        err |> IO.inspect()
         establish_failed(state)
     end
   end
